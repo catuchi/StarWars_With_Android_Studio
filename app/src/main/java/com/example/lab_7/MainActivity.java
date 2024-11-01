@@ -35,31 +35,26 @@ public class MainActivity extends AppCompatActivity {
         listView.setAdapter(characterAdapter);
 
         listView.setOnItemClickListener((parent, view, position, id) -> {
-            // Retrieve the selected character's details
             HashMap<String, String> selectedCharacter = characterList.get(position);
             String name = selectedCharacter.get("name");
             String height = selectedCharacter.get("height");
             String mass = selectedCharacter.get("mass");
 
-            // Create a Bundle to pass data to the fragment or activity
             Bundle bundle = new Bundle();
             bundle.putString("name", name);
             bundle.putString("height", height);
             bundle.putString("mass", mass);
 
-            // Check if we are on a tablet or phone
             if (findViewById(R.id.frame_layout) != null) {
-                // Tablet mode: Replace the FrameLayout with DetailsFragment
                 DetailsFragment detailsFragment = new DetailsFragment();
-                detailsFragment.setArguments(bundle);  // Pass the data to the fragment
+                detailsFragment.setArguments(bundle);
 
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.frame_layout, detailsFragment)
                         .commit();
             } else {
-                // Phone mode: Start EmptyActivity with the bundle
                 Intent intent = new Intent(MainActivity.this, EmptyActivity.class);
-                intent.putExtras(bundle);  // Attach the data to the Intent
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });
@@ -102,7 +97,6 @@ public class MainActivity extends AppCompatActivity {
                     String height = character.getString("height");
                     String mass = character.getString("mass");
 
-                    // Save each character's info in a HashMap
                     HashMap<String, String> characterInfo = new HashMap<>();
                     characterInfo.put("name", name);
                     characterInfo.put("height", height);
@@ -111,7 +105,6 @@ public class MainActivity extends AppCompatActivity {
                     characterList.add(characterInfo);
                 }
 
-                // Notify adapter of data changes
                 characterAdapter.notifyDataSetChanged();
 
             } catch (JSONException e) {
@@ -121,13 +114,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void passDataToFragment(ArrayList<HashMap<String, String>> characterList) {
-        // Create an instance of DetailsFragment and pass the data as a Bundle
         DetailsFragment detailsFragment = new DetailsFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable("characterList", characterList);
         detailsFragment.setArguments(bundle);
 
-        // Load DetailsFragment
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout, detailsFragment);
         transaction.commit();
