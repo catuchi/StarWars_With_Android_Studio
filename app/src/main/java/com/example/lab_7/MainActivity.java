@@ -112,15 +112,4 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
-    private void passDataToFragment(ArrayList<HashMap<String, String>> characterList) {
-        DetailsFragment detailsFragment = new DetailsFragment();
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("characterList", characterList);
-        detailsFragment.setArguments(bundle);
-
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_layout, detailsFragment);
-        transaction.commit();
-    }
 }
